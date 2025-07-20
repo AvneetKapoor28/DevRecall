@@ -8,8 +8,6 @@ export const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN
 });
 
-// const github_url = 'https://github.com/docker/genai-stack'
-
 type Response = {
     commitMessage: string,
     commitHash: string,
@@ -46,10 +44,12 @@ export const pollCommits = async(projectId: string)=>{
     const {project, githubUrl} = await fetchProjectGithubUrl(projectId);
     const commithashes = await getCommitHashes(githubUrl); 
     const unprocessedCommits = await filterUnprocessedCommits(projectId, commithashes);
-    const summaryResponses = await Promise.allSettled(unprocessedCommits.map((commit : any)=>{
+    const summaryResponses = await Promise.allSettled(unprocessedCommits.map((commit : any, index)=>{
+        console.log(`summarising commit: ${index} in POLLCOMMITS FUNCTION`)
         return summariseCommit(githubUrl, commit.commitHash)
     }))
     const summaries = summaryResponses.map((response: any) =>{
+        
         if(response.status === "fulfilled"){
             return response.value as string
         }
@@ -76,7 +76,8 @@ export const pollCommits = async(projectId: string)=>{
 async function summariseCommit(githubUrl: string, commitHash: string) {
     const {data} = await axios.get(`${githubUrl}/commits/${commitHash}.diff`, {
         headers: {
-            'Accept': 'application/vnd.github.v3.diff'
+            'Accept': 'application/vnd.github.v3.diff',
+            'Authorization': `token ${process.env.GITHUB_TOKEN}`
         }
     })
 

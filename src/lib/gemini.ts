@@ -1,4 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import {Document} from "@langchain/core/documents";
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINIKEY!);
 
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -36,15 +38,35 @@ export const aiSummariseCommit = async (diff: string) => {
   return response.response.text();
 };
 
-console.log(await aiSummariseCommit(`diff --git a/docker-compose.yml b/docker-compose.yml
-index 1c94b8588..ae1170df0 100644
---- a/docker-compose.yml
-+++ b/docker-compose.yml
-@@ -30,6 +30,7 @@ services:
-     tty: true
- 
-   database:
-+    user: neo4j:neo4j
-     image: neo4j:5.11
-     ports:
-       - 7687:7687`))
+export async function summariseCode(doc: Document){
+    console.log("Generating summary for: ", doc.metadata.source);
+    try{
+        const code = doc.pageContent.slice(0,10000);
+        const response = await model.generateContent([
+            `You are an intelligent senior software engineer who specialises in onboarding junior software engineers onto projects.`,
+            `you are onboarding a new junior engineer and explaining to them the purpose of the ${doc.metadata.source} file.
+            Here is the code: 
+            ---
+            ${code}
+            ---
+            Give a summary in no more than 100 words of the code above`
+        ]);
+        
+        return response.response.text()
+    }
+    catch(e){
+        console.log("Error in summariseCode: ", e);
+        return ""
+    }
+
+}
+
+
+export async function generateEmbedding(summary: string){
+    const model = genAI.getGenerativeModel({model : "text-embedding-004"})
+    const result = await model.embedContent(summary)
+    const embedding = result.embedding
+    return embedding.values
+}
+
+// console.log(await generateEmbedding("hello world"))
