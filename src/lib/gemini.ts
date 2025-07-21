@@ -6,6 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINIKEY!);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 export const aiSummariseCommit = async (diff: string) => {
+    // console.log("Generating commit summary for diff: ", diff);
   const response = await model.generateContent([
     `You are an expert programmer, and you are trying to summarise a git diff.
         Reminders about the git diff format: 
@@ -35,6 +36,10 @@ export const aiSummariseCommit = async (diff: string) => {
         Do not include parts of the example in your summary, it is given only as an example of appropriate comments.`,
     `Please summarise the following diff file: \n\n${diff}`
   ]);
+//   console.log(diff)
+//   console.log("]\n\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n")
+//   console.log("AI SUMMARISE COMMIT RESPONSE: ", response.response.text());
+    // console.log("AI SUMMARISE COMMIT RESPONSE: ", response.response.text());
   return response.response.text();
 };
 

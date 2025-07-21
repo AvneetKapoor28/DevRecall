@@ -74,12 +74,13 @@ export const pollCommits = async(projectId: string)=>{
 }
 
 async function summariseCommit(githubUrl: string, commitHash: string) {
-    const {data} = await axios.get(`${githubUrl}/commits/${commitHash}.diff`, {
-        headers: {
-            'Accept': 'application/vnd.github.v3.diff',
-            'Authorization': `token ${process.env.GITHUB_TOKEN}`
-        }
-    })
+    const {data} = await axios.get(`${githubUrl}/commit/${commitHash}.diff`,{
+  headers: {
+    Accept: 'application/vnd.github.v3.diff',
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}` // ← must be set in your .env or config
+  }
+})
+    // console.log(`URL : ${githubUrl}/commit/${commitHash}.diff`)
 
     return await aiSummariseCommit(data) ||"";
 }
