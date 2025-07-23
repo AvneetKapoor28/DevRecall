@@ -13,6 +13,7 @@ import MDEditor from '@uiw/react-md-editor'
 import CodeReferences from './code-references'
 import { api } from '@/trpc/react'
 import { toast } from 'sonner'
+import useRefetch from '@/hooks/use-refetch'
 
 const AskQuestionCard = () => {
     const {project} = useProject()
@@ -39,8 +40,10 @@ const AskQuestionCard = () => {
                 setAnswer(ans=> ans + delta)
             }
         }
-
+        setLoading(false)
     } 
+
+    const refetch = useRefetch()
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -61,6 +64,7 @@ const AskQuestionCard = () => {
                         // setOpen(false);
                         setLoading(false);
                         setQuestion("")
+                        refetch()
                         toast.success("Answer saved")
                     },
                     onError: ()=> {
@@ -95,15 +99,16 @@ const AskQuestionCard = () => {
       </Dialog>
       <Card className="relative col-span-3">
         <CardHeader>Ask a Question</CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit}>
+        <CardContent className="flex flex-col h-64">
+          <form onSubmit={onSubmit} className="flex flex-col flex-1 h-full">
             <Textarea
               placeholder="Which file should I edit to change the home page?"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
+              className="flex-1 resize-none"
             />
             <div className="h-4"></div>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} className="mt-auto">
               Ask DevRecall !
             </Button>
           </form>

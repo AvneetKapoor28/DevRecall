@@ -57,6 +57,7 @@ const items = [
 export function AppSidebar() {
   const { open } = useSidebar();
   const {projects, projectId, setProjectId} = useProject()
+  // console.log(projects, projectId, "IMPORTED FROM USEPROJECT HOOK") 
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
@@ -68,7 +69,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="scrollbar-hidden">
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -100,7 +101,7 @@ export function AppSidebar() {
 
         <SidebarGroup>
           <SidebarGroupLabel>Your projects</SidebarGroupLabel>
-          <SidebarMenu>
+          <SidebarMenu  >
             {projects?.map((project) => {
               return (
                 <SidebarMenuItem key={project.name}>
