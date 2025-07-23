@@ -1,13 +1,18 @@
+'use client'
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogHeader, DialogTitle,DialogContent} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import useProject from '@/hooks/use-project';
+
 import React from 'react'
 import { toast } from 'sonner';
 
 const InviteButton = () => {
     const { projectId } = useProject();
     const [open, setOpen] = React.useState(false);
+
+    const inviteLink = `${window.location.origin}/join/${projectId}`;
+    console.log(inviteLink);
   return (
     <>
     <Dialog open={open} onOpenChange={setOpen}>
@@ -23,7 +28,7 @@ const InviteButton = () => {
             onClick={()=> {
                 navigator.clipboard.writeText(`${window.location.origin}/join/${projectId}`);
                 toast.success("Link copied to clipboard")
-            }} value={`${window.location.origin}/join/${projectId}`}>
+            }} value={inviteLink}>
 
             </Input>
         </DialogContent>
