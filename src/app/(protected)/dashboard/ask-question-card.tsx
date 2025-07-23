@@ -1,3 +1,4 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
@@ -14,6 +15,9 @@ import CodeReferences from './code-references'
 import { api } from '@/trpc/react'
 import { toast } from 'sonner'
 import useRefetch from '@/hooks/use-refetch'
+import { useTheme } from 'next-themes'
+
+
 
 const AskQuestionCard = () => {
     const {project} = useProject()
@@ -23,6 +27,7 @@ const AskQuestionCard = () => {
     const [filesReferences, setFilesReferences] = React.useState<{fileName: string, sourceCode: string, summary: string}[]>([])
     const [answer, setAnswer] = React.useState("")
     const saveAnswer = api.project.saveAnswer.useMutation()
+    const {theme} = useTheme()
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
         setAnswer("")
@@ -79,10 +84,12 @@ const AskQuestionCard = () => {
           </DialogHeader>
           {/* <div data-color-mode="light"></div> */}
 
-          <MDEditor.Markdown
+          <div data-color-mode={theme}>
+            <MDEditor.Markdown
             source={answer}
             className="!h-full max-h-[40vh] max-w-[70vw] overflow-y-scroll rounded-xl px-4"
           />
+          </div>
           <div className="h-4"></div>
           <CodeReferences filesReferences={filesReferences} />
 
@@ -97,6 +104,7 @@ const AskQuestionCard = () => {
           </Button>
         </DialogContent>
       </Dialog>
+
       <Card className="relative col-span-3">
         <CardHeader>Ask a Question</CardHeader>
         <CardContent className="flex flex-col h-64">

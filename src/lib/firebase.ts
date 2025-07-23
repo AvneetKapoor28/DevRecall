@@ -8,7 +8,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB5d6EaSNR_8gXaj8tkzGozYSzLCcYbHos",
+  apiKey: `${process.env.FIREBASE_API_KEY}`,
   authDomain: "devrecall-d92e5.firebaseapp.com",
   projectId: "devrecall-d92e5",
   storageBucket: "devrecall-d92e5.firebasestorage.app",

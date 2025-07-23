@@ -1,5 +1,6 @@
 "use client";
 
+import { ModeToggle } from "@/components/theme-toggle-btn";
 import { Button } from "@/components/ui/button";
 import {
   Sidebar,
@@ -26,7 +27,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { title } from "process";
 
 const items = [
@@ -45,11 +46,11 @@ const items = [
     url: "/meetings",
     icon: Presentation,
   },
-  {
-    title: "Billing",
-    url: "/billing",
-    icon: CreditCard,
-  },
+  // {
+  //   title: "Billing",
+  //   url: "/billing",
+  //   icon: CreditCard,
+  // },
 ];
 
 
@@ -57,16 +58,21 @@ const items = [
 export function AppSidebar() {
   const { open } = useSidebar();
   const {projects, projectId, setProjectId} = useProject()
+  const router = useRouter()
   // console.log(projects, projectId, "IMPORTED FROM USEPROJECT HOOK") 
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
-        <div className="flex items-center gap-2">
-          <Image src="/logo.png" alt="logo" height={50} width={50} />
+        <div className="flex justify-between items-center">
+         <div className="flex items-center gap-2">
+           <Image src="/logo.png" alt="logo" height={50} width={50} />
           {open && (
             <h1 className="text-primary/80 text-xl font-bold">DevRecall</h1>
           )}
+         </div>
+         {open && (<ModeToggle/>)} 
         </div>
+        {!open && (<ModeToggle />)}
       </SidebarHeader>
 
       <SidebarContent className="scrollbar-hidden">
@@ -105,11 +111,13 @@ export function AppSidebar() {
             {projects?.map((project) => {
               return (
                 <SidebarMenuItem key={project.name}>
-                  <SidebarMenuButton asChild>
-                    <div onClick={() => setProjectId(project.id)}>
+                  <SidebarMenuButton className="pl-1"asChild>
+                    <div onClick={() => {setProjectId(project.id)
+                      router.push('/dashboard')
+                    }}>
                       <div
                         className={cn(
-                          "text-primary flex size-6 items-center justify-center rounded-sm border bg-white text-sm",
+                          "text-primary flex size-6 items-center justify-center rounded-sm border bg-white text-sm min-w-[25px]",
                           {
                             "bg-primary text-white": project.id === projectId,
                           },

@@ -1,6 +1,17 @@
+'use client';
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
-export default async function Home() {
-  return <Button>Click me</Button>
+export default function Home() {
+  const router = useRouter()
+
+  useEffect(()=>{
+    router.push('/create')
+  }, [router])
+
+  return null
+  
 }
