@@ -10,9 +10,7 @@ import { toast } from 'sonner';
 const InviteButton = () => {
     const { projectId } = useProject();
     const [open, setOpen] = React.useState(false);
-
-    const inviteLink = `${window.location.origin}/join/${projectId}`;
-    console.log(inviteLink);
+    
   return (
     <>
     <Dialog open={open} onOpenChange={setOpen}>
@@ -28,7 +26,7 @@ const InviteButton = () => {
             onClick={()=> {
                 navigator.clipboard.writeText(`${window.location.origin}/join/${projectId}`);
                 toast.success("Link copied to clipboard")
-            }} value={inviteLink}>
+            }} value={`${window.location.origin}/join/${projectId}`}>
 
             </Input>
         </DialogContent>
