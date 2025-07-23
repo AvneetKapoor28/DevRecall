@@ -23,19 +23,22 @@ const Createpage = () => {
 
 
     function onSubmit(data: FormInput) {
-        // window.alert(JSON.stringify(data, null , 2))
+        const toastLoading = toast.loading("Creating project... This may take a while");
         createProject.mutate({
             githubURL: data.repoURL,
             name: data.projectName,
             githubToken: data.githubToken,
         }, {
             onSuccess: () => {
-                toast.success("Project created successfully!")
+                toast.dismiss(toastLoading)
+                toast.success(`Project created successfully!
+                    You can now access it from the sidebar`)
                 refetch()
                 reset()
             },
             onError: () => {
-                toast.error("Failed to create project:")
+                toast.dismiss(toastLoading)
+                toast.error("Failed to create project, Please check the URL and try again")
             },
         })
         return true

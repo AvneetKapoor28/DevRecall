@@ -7,6 +7,7 @@ import AskQuestionCard from '../dashboard/ask-question-card'
 import MDEditor from '@uiw/react-md-editor'
 import CodeReferences from '../dashboard/code-references'
 import { useTheme } from 'next-themes'
+import { FadeInUp } from '@/components/fade-up'
 
 const QAPage = () => {
     const {projectId} = useProject()
@@ -18,7 +19,8 @@ const QAPage = () => {
     const question = questions?.[questionIndex]
     const {theme} = useTheme()
   return (
-    <Sheet>
+   <FadeInUp>
+     <Sheet>
       <AskQuestionCard/>
       <div className='h-4'></div>
       <h1 className='text-xl font-semibold'>Saved Questions</h1>
@@ -76,6 +78,7 @@ const QAPage = () => {
         </SheetContent>
       )}
     </Sheet>
+   </FadeInUp>
   )
 }
 

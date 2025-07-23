@@ -1,0 +1,24 @@
+/* .wave-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #101010;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+} */
+
+.wave-text span {
+  display: inline-block;
+  font-size: 4rem;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}

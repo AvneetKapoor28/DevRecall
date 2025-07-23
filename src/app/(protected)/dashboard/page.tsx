@@ -12,12 +12,19 @@ import ArchiveButton from "./archive-button";
 const InviteButton = dynamic(()=> import('./invite-button'), {ssr: false})
 import TeamMembers from "./team-members";
 import dynamic from "next/dynamic";
+import { FadeInUp } from "@/components/fade-up";
+import WaveText from "@/components/wave-text";
 
 const DashboardPage = () => {
   const { project } = useProject();
-
+  // if(!project?.id) {return (
+  //   <div className="flex items-center justify-center h-full w-full">
+  //     <WaveText text="Loading Your Project"/>
+  //   </div>
+  // )};
   return (
-    <div>
+    <FadeInUp>
+      <div>
       {/* {project?.id} */}
       <div className="flex flex-wrap items-center justify-between gap-y-4">
         {/* GITHUB LINK */}
@@ -60,6 +67,7 @@ const DashboardPage = () => {
         <CommitLog/>
       </div>
     </div>
+    </FadeInUp>
   );
 };
 

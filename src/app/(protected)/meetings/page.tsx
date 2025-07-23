@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Delete, LucideDelete, Trash, Trash2, TrashIcon } from "lucide-react";
 import { toast } from "sonner";
 import useRefetch from "@/hooks/use-refetch";
+import { FadeInUp } from "@/components/fade-up";
 
 const MeetingsPage = () => {
   const { projectId } = useProject();
@@ -20,7 +21,7 @@ const MeetingsPage = () => {
   const deleteMeeting = api.project.deleteMeeting.useMutation()
   const refetch = useRefetch()
   return (
-    <>
+    <FadeInUp>
       <MeetingCard />
       <div className="h-6"></div>
       <h1 className="font-semibold text-xl">Meetings</h1>
@@ -46,7 +47,7 @@ const MeetingsPage = () => {
             </div>
             <div className="flex items-center flex-none gap-x-4">
               <Link href={`/meetings/${meeting.id}`}>
-              <Button variant={"outline"} size='sm'> View Meeting</Button>
+              <Button variant={"outline"} disabled={meeting.status === 'PROCESSING'} size='sm'> View Meeting</Button>
               </Link>
               <Button size='sm' disabled={deleteMeeting.isPending} variant={"destructive"} onClick={()=> deleteMeeting.mutate({meetingId: meeting.id}, {
                 onSuccess: ()=>{
@@ -57,7 +58,7 @@ const MeetingsPage = () => {
             </div>
           </li>
         ))}</ul>
-    </>
+    </FadeInUp>
   );
 };
 

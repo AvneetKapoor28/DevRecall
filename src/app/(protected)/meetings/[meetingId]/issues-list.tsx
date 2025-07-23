@@ -1,4 +1,5 @@
 "use client";
+import { FadeInUp } from "@/components/fade-up";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,7 +11,7 @@ import {
 import { Dialog, DialogHeader, DialogTitle, DialogContent, DialogDescription } from "@/components/ui/dialog";
 import { api, type RouterOutputs } from "@/trpc/react";
 // import { DialogContent, DialogDescription } from "@radix-ui/react-dialog";
-import { VideoIcon } from "lucide-react";
+import { Video} from "lucide-react";
 import React from "react";
 
 type Props = {
@@ -31,14 +32,14 @@ const IssuesList = ({ meetingId }: Props) => {
     <div className="p-8">
       <div className="max-w-2l mx-auto flex items-center justify-between gap-x-8 border-b pb-6 lg:mx-0 lg:max-w-none">
         <div className="flex items-center gap-x-6">
-          <div className="rounded-full border bg-white p-3">
-            <VideoIcon className="h-6 w-6" />
+          <div className="rounded-full border bg-backround p-3">
+            <Video className="h-6 w-6" />
           </div>
           <h1>
             <div className="text-sm leading-6 text-gray-600">
               Meeting on {meeting.createdAt.toLocaleDateString()}
             </div>
-            <div className="mt-1 text-base leading-6 font-semibold text-gray-900">
+            <div className="mt-1 text-2xl leading-6 font-semibold text-foreground">
               {meeting.name}
             </div>
           </h1>
@@ -57,7 +58,8 @@ const IssuesList = ({ meetingId }: Props) => {
 function IssueCard({issue,}: {issue: NonNullable<RouterOutputs["project"]["getMeetingById"]>["issues"][number];}) {
     const [open, setOpen] = React.useState(false);
   return (
-    <>
+    <FadeInUp>
+      <>
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
             <DialogHeader>
@@ -70,9 +72,9 @@ function IssueCard({issue,}: {issue: NonNullable<RouterOutputs["project"]["getMe
                 <p className="text-gray-600">
                     {issue.headline}
                 </p>
-                <blockquote className="mt-2 border-1-4 border-gray-300 bg-gray-50 p-4">
+                <blockquote className="mt-2 border-1-4 border-gray-300 bg-border p-4 rounded-sm">
                     <span className="text-sm text-gray-600">{issue.start} - {issue.end}</span>
-                    <p className="font-medium italic leading-relaxed text-gray-900">{issue.summary}</p>
+                    <p className="font-medium italic leading-relaxed text-secondary-foreground">{issue.summary}</p>
                 </blockquote>
             </DialogHeader>
         </DialogContent>
@@ -94,6 +96,7 @@ function IssueCard({issue,}: {issue: NonNullable<RouterOutputs["project"]["getMe
         </CardContent>{" "}
       </Card>
     </>
+    </FadeInUp>
   );
 }
 
