@@ -12,6 +12,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { Progress } from "@/components/ui/progress"
+
 
 const MeetingCard = () => {
   const { project } = useProject();
@@ -85,19 +87,11 @@ const MeetingCard = () => {
           </div>
         </>
       )}
-      {isUploading && (
-        <div className="flex items-center justify-center">
-          <CircularProgressbar
-            value={progress}
-            text={`${progress}%`}
-            className="size-20"
-            styles={buildStyles({
-              pathColor: "var(--primary)",
-              textColor: "var(--primary)",
-              trailColor: "var(--primary)",
-            })}
-          />
-          <p className="text-sm text-gray-500">Uploading you meeting...</p>
+      { isUploading &&(
+        <div className="flex flex-col items-center justify-center w-[80%] gap-10">
+          <Progress value={progress} />
+          <div>{`[${progress}%]`}</div>
+          <p className="text-xl text-gray-500">Uploading your meeting...</p>
         </div>
       )}
     </Card>
