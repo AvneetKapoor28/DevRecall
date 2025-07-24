@@ -51,6 +51,7 @@
   --color-saved-qa-card: var(--saved-qa-card);
   --color-saved-qa-card-hover: var(--saved-qa-card-hover);
   --color-commit-ring: var(--commit-ring);
+  --color-dashboard-card: var(--dashboard-card);
 }
 
 :root {
@@ -94,6 +95,8 @@
   --saved-qa-card: oklch(1 0 0);
   --saved-qa-card-hover: oklch(92.512% 0.03524 303.713 / 0.672);
   --commit-ring: oklch(0.928 0.006 264.531);
+  --dashboard-card: oklch(1 0 0);
+
 }
 
 .dark {
@@ -136,6 +139,7 @@
   --saved-qa-card: oklch(0.274 0.006 286.033);
   --saved-qa-card-hover: oklch(0.278 0.033 256.848);
   --commit-ring: oklch(0.541 0.281 293.009);
+  --dashboard-card: oklch(0.274 0.006 286.033);
 }
 
 

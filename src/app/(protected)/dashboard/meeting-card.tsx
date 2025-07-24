@@ -64,7 +64,7 @@ const MeetingCard = () => {
   });
   return (
     <Card
-      className="col-span-2 flex flex-col items-center justify-center bg-zinc-800 cursor-pointer"
+      className="col-span-2 flex flex-col items-center justify-center bg-dashboard-card cursor-pointer"
       {...getRootProps()}
     >
       {!isUploading && (
@@ -79,7 +79,7 @@ const MeetingCard = () => {
             Powered by AI
           </p>
           <div className="mt-6">
-            <Button disabled={isUploading}>
+            <Button disabled={isUploading} className="cursor-pointer">
               <Upload className="mr-1.5 -ml-0.5 h-5 w-5" aria-hidden="true" />
               Upload Meeting Audio
               <input className="hidden" {...getInputProps()} />

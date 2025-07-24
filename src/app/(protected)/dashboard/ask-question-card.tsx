@@ -65,6 +65,7 @@ const AskQuestionCard = () => {
                 />
               </DialogTitle>
               <Button
+                className="cursor-pointer"
                 disabled={saveAnswer.isPending}
                 variant={"outline"}
                 onClick={() => {
@@ -102,7 +103,7 @@ const AskQuestionCard = () => {
   {/* Top Section */}
   <div className="flex gap-4 flex-grow overflow-hidden">
     {/* Markdown / Answer Section */}
-    <div className="flex-3 overflow-hidden">
+    <div className="basis-3/4 overflow-hidden">
       {answer === "" ? (
         <div className="flex h-full items-center justify-center">
           <WaveText text="Analysing..." />
@@ -121,7 +122,7 @@ const AskQuestionCard = () => {
     </div>
 
     {/* Sidebar Section */}
-    <div className="flex-1 flex flex-col gap-2 overflow-y-auto scrollbar-hidden">
+    <div className="basis-1/4 flex flex-col gap-2 overflow-y-auto scrollbar-hidden">
       <h2 className="text-muted-foreground">Referenced Files</h2>
       <CodeReferences filesReferences={filesReferences} />
     </div>
@@ -131,6 +132,7 @@ const AskQuestionCard = () => {
   <div className="flex w-full items-center justify-center p-4">
     <DialogClose asChild>
       <Button
+      className="cursor-pointer"
         type="button"
         onClick={() => {
           setOpen(false);
@@ -146,7 +148,7 @@ const AskQuestionCard = () => {
         </DialogContent>
       </Dialog>
 
-      <Card className="relative col-span-3 bg-zinc-800">
+      <Card className="relative col-span-3 bg-dashboard-card">
         <CardHeader className="text-xl font-semibold">
           Ask a Question
         </CardHeader>
@@ -161,7 +163,7 @@ const AskQuestionCard = () => {
             />
             <div className="h-4"></div>
             <div className="flex w-full items-center justify-center">
-              <Button type="submit" disabled={loading} className="mt-auto">
+              <Button type="submit" disabled={loading} className="mt-auto cursor-pointer">
                 Ask DevRecall !
               </Button>
             </div>

@@ -111,7 +111,7 @@ export function AppSidebar() {
           <SidebarMenu className=" max-h-[40vh] overflow-y-auto scrollbar-hidden">
             {projects?.map((project) => {
               return (
-                <SidebarMenuItem key={project.name}>
+                <SidebarMenuItem key={project.name} className="cursor-pointer">
                   <SidebarMenuButton className="pl-1" asChild>
                     <div
                       onClick={() => {

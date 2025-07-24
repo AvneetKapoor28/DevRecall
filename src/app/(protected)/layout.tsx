@@ -25,9 +25,14 @@ const SidebarLayout = ({ children }: Props) => {
           {/* <SearchBar/> */}
           <Popover>
             <PopoverTrigger asChild>
-              <Info />
+              <Info className="cursor-pointer" />
             </PopoverTrigger>
-            <PopoverContent side="right" sideOffset={10} align="start" className="w-full">
+            <PopoverContent
+              side="right"
+              sideOffset={10}
+              align="start"
+              className="w-full"
+            >
               <h2 className="text-2xl font-bold">How to use</h2>
               <div className="h-4"></div>
               {[
@@ -36,30 +41,52 @@ const SidebarLayout = ({ children }: Props) => {
                   items: [
                     "Enter the GitHub URL of a public repository (must have a main branch).",
                     "Project setup may take a few minutes depending on repo size.",
-                    <>All your projects appear in the <b>sidebar</b>.</>,
+                    <>
+                      All your projects appear in the <b>sidebar</b>.
+                    </>,
                   ],
                 },
                 {
                   title: "📊Dashboard",
                   items: [
-                    <>View the latest <b>10 commits</b> with AI-generated summaries.</>,
-                    <>Access <b>Ask Questions</b> and <b>Summarize Meeting</b> directly.</>,
-                    <> <b>Invite members</b> to collaborate on shared projects.</>,
+                    <>
+                      View the latest <b>10 commits</b> with AI-generated
+                      summaries.
+                    </>,
+                    <>
+                      Access <b>Ask Questions</b> and <b>Summarize Meeting</b>{" "}
+                      directly.
+                    </>,
+                    <>
+                      {" "}
+                      <b>Invite members</b> to collaborate on shared projects.
+                    </>,
                   ],
                 },
                 {
                   title: "💬 Q&A",
                   items: [
-                    <>Ask questions about your codebase (e.g., "How does user authentication work?").</>,
-                    <> <b>Save answers</b> to build your knowledge base.</>,
-                    <>See which files were referenced—click any to view with a <b>Code Summary</b>.</>,
+                    <>
+                      Ask questions about your codebase (e.g., "How does user
+                      authentication work?").
+                    </>,
+                    <>
+                      {" "}
+                      <b>Save answers</b> to build your knowledge base.
+                    </>,
+                    <>
+                      See which files were referenced—click any to view with a{" "}
+                      <b>Code Summary</b>.
+                    </>,
                   ],
                 },
                 {
                   title: "📁 Meetings",
                   items: [
                     "Upload recorded meetings for processing.",
-                    <>Get a breakdown of <b>topics discussed.</b></>,
+                    <>
+                      Get a breakdown of <b>topics discussed.</b>
+                    </>,
                     "Processing may take a few moments.",
                   ],
                 },
@@ -82,10 +109,26 @@ const SidebarLayout = ({ children }: Props) => {
                   )}
                 </React.Fragment>
               ))}
-
-
             </PopoverContent>
           </Popover>
+          <div className="w-2"></div>
+          <div className="text-muted-foreground text-sm">
+            Press{" "}
+            <kbd className="bg-muted rounded px-1 py-0.5 font-semibold text-foreground">
+              ⌘
+            </kbd>
+            {`${"/"}`}
+            <kbd className="bg-muted rounded px-1 py-0.5 font-semibold text-foreground">
+              Ctrl
+            </kbd>
+
+            +
+            <kbd className="bg-muted rounded px-1 py-0.5 font-semibold text-foreground">
+              K
+            </kbd>{" "}
+            to Search
+          </div>
+
           <div className="ml-auto"></div>
           <UserButton />
         </div>
