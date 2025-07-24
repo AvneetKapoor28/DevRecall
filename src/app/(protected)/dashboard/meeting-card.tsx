@@ -64,7 +64,7 @@ const MeetingCard = () => {
   });
   return (
     <Card
-      className="col-span-2 flex flex-col items-center justify-center"
+      className="col-span-2 flex flex-col items-center justify-center bg-zinc-800 cursor-pointer"
       {...getRootProps()}
     >
       {!isUploading && (

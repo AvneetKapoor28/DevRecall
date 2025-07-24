@@ -17,13 +17,25 @@ import { FadeInUp } from "@/components/fade-up";
 
 const QAPage = () => {
   const { projectId } = useProject();
-  const { data: questions } = api.project.getQuestions.useQuery({
+  const { data: questions, isLoading } = api.project.getQuestions.useQuery({
     projectId,
   });
 
   const [questionIndex, setQuestionIndex] = React.useState<number>(0);
   const question = questions?.[questionIndex];
   const { theme } = useTheme();
+  if (isLoading) {
+    return (
+      <div className="h-full">
+        <AskQuestionCard />
+        <div className="h-4"></div>
+        <h1 className="text-xl font-semibold">Saved Questions</h1>
+        <div className="flex items-center justify-center h-64">
+          <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <FadeInUp>
       <Sheet>
@@ -65,36 +77,35 @@ const QAPage = () => {
           ))}
         </div>
         {question && (
-          <SheetContent className="sm:max-w-[80vw] w-full bg-background p-8 rounded-lg shadow-lg flex flex-col gap-6 overflow-auto">
+          <SheetContent className="bg-background flex w-full flex-col gap-6 overflow-auto rounded-lg p-8 shadow-lg sm:max-w-[80vw]">
             <SheetHeader>
-              <SheetTitle className="text-2xl font-bold mb-2 text-foreground">
+              <SheetTitle className="text-foreground mb-2 text-2xl font-bold">
                 {`Q. ${question.question}`}
               </SheetTitle>
             </SheetHeader>
-            <div className="flex gap-4 flex-grow overflow-hidden">
-                {/* Markdown / Answer Section */}
-                <div className="flex-3 overflow-hidden">
-                
-                    <div
-                      data-color-mode={theme}
-                      className="h-full overflow-hidden rounded-xl"
-                    >
-                      <MDEditor.Markdown
-                        source={question.answer}
-                        className="h-full overflow-y-auto px-4"
-                      />
-                    </div>
-                  
-                </div>
-            
-                {/* Sidebar Section */}
-                <div className="flex-1 flex flex-col gap-2 overflow-y-auto scrollbar-hidden">
-                  <h2 className="text-muted-foreground">Referenced Files</h2>
-                  <CodeReferences filesReferences={(question.filesReferences) as any} />
+            <div className="flex flex-grow gap-4 overflow-hidden">
+              {/* Markdown / Answer Section */}
+              <div className="flex-3 overflow-hidden">
+                <div
+                  data-color-mode={theme}
+                  className="h-full overflow-hidden rounded-xl"
+                >
+                  <MDEditor.Markdown
+                    source={question.answer}
+                    className="h-full overflow-y-auto px-4"
+                  />
                 </div>
               </div>
+
+              {/* Sidebar Section */}
+              <div className="scrollbar-hidden flex flex-1 flex-col gap-2 overflow-y-auto">
+                <h2 className="text-muted-foreground">Referenced Files</h2>
+                <CodeReferences
+                  filesReferences={question.filesReferences as any}
+                />
+              </div>
+            </div>
           </SheetContent>
-         
         )}
       </Sheet>
     </FadeInUp>

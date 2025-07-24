@@ -146,7 +146,7 @@ const AskQuestionCard = () => {
         </DialogContent>
       </Dialog>
 
-      <Card className="relative col-span-3">
+      <Card className="relative col-span-3 bg-zinc-800">
         <CardHeader className="text-xl font-semibold">
           Ask a Question
         </CardHeader>
@@ -157,6 +157,7 @@ const AskQuestionCard = () => {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               className="flex-1 resize-none"
+
             />
             <div className="h-4"></div>
             <div className="flex w-full items-center justify-center">
