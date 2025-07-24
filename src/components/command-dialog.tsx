@@ -70,7 +70,7 @@ export function CommandMenu() {
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
-      <CommandList>
+      <CommandList className="scrollbar-hidden">
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           {SuggestionsList.map((item) => (
