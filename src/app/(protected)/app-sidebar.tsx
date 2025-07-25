@@ -1,6 +1,7 @@
 "use client";
 
 import { FadeInUp } from "@/components/fade-up";
+import { SidebarFooter } from "@/components/sidebar-footer";
 import { ModeToggle } from "@/components/theme-toggle-btn";
 import { Button } from "@/components/ui/button";
 import {
@@ -151,6 +152,7 @@ export function AppSidebar() {
             )}
             </SidebarMenu>
         </SidebarGroup>
+        <SidebarFooter/>
       </SidebarContent>
     </Sidebar>
   );
