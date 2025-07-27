@@ -101,9 +101,9 @@ const AskQuestionCard = () => {
 
           <div className="flex flex-col h-[60vh]">
   {/* Top Section */}
-  <div className="flex gap-4 flex-grow overflow-hidden">
+  <div className="flex gap-4 flex-grow overflow-hidden max-w-[76vw]">
     {/* Markdown / Answer Section */}
-    <div className="basis-3/4 overflow-hidden">
+    <div className="basis-3/4 overflow-auto">
       {answer === "" ? (
         <div className="flex h-full items-center justify-center">
           <WaveText text="Analysing..." />
@@ -115,7 +115,7 @@ const AskQuestionCard = () => {
         >
           <MDEditor.Markdown
             source={answer}
-            className="h-full overflow-y-auto px-4"
+            className="h-full w-full overflow-auto px-4 whitespace-pre-wrap"
           />
         </div>
       )}
