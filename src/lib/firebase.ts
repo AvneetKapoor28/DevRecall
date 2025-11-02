@@ -44,7 +44,7 @@ export async function uploadFile(file: File, setProgress: (progress: number)=> v
         }
         catch(error){
             console.error("Error uploading file:", error);
-            reject(new Error("Failed to upload file")); 
+            reject(error instanceof Error ? error : new Error("Failed to upload file")); 
         }
     })
 

@@ -19,8 +19,8 @@ const MeetingCard = () => {
   const processMeeting = useMutation({
     mutationFn: async (data: { meetingUrl: string; projectId: string; meetingId: string }) => {
       const { meetingUrl, projectId, meetingId } = data;
-      const response = await axios.post('/api/process-meeting', { meetingUrl, projectId, meetingId });
-      return response.data as unknown;
+      const response = await axios.post<{ success: boolean }>('/api/process-meeting', { meetingUrl, projectId, meetingId });
+      return response.data;
     },
   });
 
