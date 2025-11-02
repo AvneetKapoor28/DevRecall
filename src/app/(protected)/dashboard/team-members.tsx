@@ -1,6 +1,7 @@
 'use client'
 import useProject from '@/hooks/use-project'
 import { api } from '@/trpc/react'
+import Image from 'next/image'
 import React from 'react'
 
 const TeamMembers = () => {
@@ -12,7 +13,7 @@ const TeamMembers = () => {
 
 
         {members?.map(member => (
-            <img key={member.id} src={member.user.imageUrl ||''} alt={member.user.firstName ||''}height={30} width={30} className='rounded-full' />
+            <Image key={member.id} src={member.user.imageUrl ||''} alt={member.user.firstName ||''} height={30} width={30} className='rounded-full' />
         ))}
     </div>
   )

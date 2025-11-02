@@ -3,6 +3,7 @@ import useProject from "@/hooks/use-project";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -19,7 +20,7 @@ const CommitLog = () => {
                 </div>
 
                 <>
-                    <img src = {commit.commitAuthorAvatar} alt="author avatar" className="relative mt-4 size-8 flex-none rounded-full bg-gray-500" />
+                    <Image src = {commit.commitAuthorAvatar} alt="author avatar" width={32} height={32} className="relative mt-4 size-8 flex-none rounded-full bg-gray-500" />
                     <div className="flex-auto rounded-md bg-card p-3 ring-1 ring-inset ring-commit-ring ">
                         {/* <p className="text-sm font-medium leading-6 text-gray-900"></p> */}
                         <div className="flex justify-between gap-x-4">
