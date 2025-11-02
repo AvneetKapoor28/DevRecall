@@ -13,7 +13,7 @@ const TeamMembers = () => {
 
 
         {members?.map(member => (
-            <Image key={member.id} src={member.user.imageUrl ||''} alt={member.user.firstName ||''} height={30} width={30} className='rounded-full' />
+            <Image key={member.id} src={member.user.imageUrl ?? ''} alt={member.user.firstName ?? ''} height={30} width={30} className='rounded-full' />
         ))}
     </div>
   )
