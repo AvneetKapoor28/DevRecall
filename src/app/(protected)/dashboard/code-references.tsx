@@ -2,7 +2,6 @@
 
 import { Tabs } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { TabsContent } from "@radix-ui/react-tabs";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   oneLight,
@@ -12,10 +11,8 @@ import React from "react";
 import { useTheme } from "next-themes";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -27,7 +24,7 @@ type Props = {
 
 const CodeReferences = ({ filesReferences }: Props) => {
   const { theme } = useTheme();
-  const [tab, setTab] = React.useState(filesReferences[0]?.fileName || "");
+  const [tab, setTab] = React.useState(filesReferences[0]?.fileName ?? "");
   const [open, setOpen] = React.useState(false);
 
   if (filesReferences.length === 0) return null;

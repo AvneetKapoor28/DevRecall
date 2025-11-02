@@ -1,5 +1,4 @@
 import {AssemblyAI} from 'assemblyai'
-import { start } from 'repl'
 
 const client = new AssemblyAI({
     apiKey: process.env.ASSEMBLY_AI_KEY!
@@ -25,7 +24,7 @@ export const processMeeting = async (meetingUrl: string) => {
         gist: chapter.gist,
         headline: chapter.headline,
         summary: chapter.summary,
-    })) || []
+    })) ?? []
 
     if(!transcript.text) {
         throw new Error('Transcript text is empty')

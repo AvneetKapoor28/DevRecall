@@ -1,5 +1,5 @@
 import { GithubRepoLoader } from "@langchain/community/document_loaders/web/github";
-import { Document } from "@langchain/core/documents";
+import type { Document } from "@langchain/core/documents";
 import { generateEmbedding, summariseCode } from "./gemini";
 import { db } from "@/server/db";
 
@@ -8,7 +8,7 @@ export const loadGithubRepo = async (
   githubToken?: string,
 ) => {
   const loader = new GithubRepoLoader(githubUrl, {
-    accessToken: githubToken || "",
+    accessToken: githubToken ?? "",
     branch: "main",
     ignoreFiles: ["node_modules",".git",".github",".vscode","package-lock.json","yarn.lock","pnpm-lock.yaml","bun.lock"],
     recursive: true,
@@ -20,11 +20,11 @@ export const loadGithubRepo = async (
 };
 
 export const indexGithubRepo = async (projectId: string, githubUrl: string, githubToken?: string) => {
-    const docs = await loadGithubRepo(githubUrl, githubToken)
-    const allEmbeddings = await generateEmbeddings(docs)
+    const docs = await loadGithubRepo(githubUrl, githubToken);
+    const allEmbeddings = await generateEmbeddings(docs);
     await Promise.allSettled(allEmbeddings.map(async (embedding, index)=>{
-        console.log(`Processing ${index} of ${allEmbeddings.length}`)
-        if(!embedding) return
+        console.log(`Processing ${index} of ${allEmbeddings.length}`);
+        if(!embedding) return;
 
         const sourceCodeEmbedding = await db.sourceCodeEmbedding.create({
             data: {
@@ -32,14 +32,14 @@ export const indexGithubRepo = async (projectId: string, githubUrl: string, gith
                 sourceCode: embedding.sourceCode,
                 fileName: embedding.fileName,
                 projectId,
-            }
-        })
+            },
+        });
         await db.$executeRaw`
         UPDATE "SourceCodeEmbedding"
         SET "summaryEmbedding" = ${embedding.embedding}::vector
-        WHERE "id" = ${sourceCodeEmbedding.id}`
-    }))
-}
+        WHERE "id" = ${sourceCodeEmbedding.id}`;
+    }));
+};
 
 // const generateEmbeddings = async (docs: Document[]) => {
 //     return await Promise.all(docs.map(async doc => {
@@ -64,7 +64,12 @@ function delay(ms: number) {
 }
 
 const generateEmbeddings = async (docs: Document[]) => {
-  const results = [];
+  const results: Array<{
+    summary: string;
+    embedding: number[];
+    sourceCode: string;
+    fileName: string;
+  }> = [];
 
   for (const doc of docs) {
     console.log(`Processing file: ${doc.metadata.source}`);
@@ -80,8 +85,8 @@ const generateEmbeddings = async (docs: Document[]) => {
     results.push({
       summary,
       embedding,
-      sourceCode: JSON.parse(JSON.stringify(doc.pageContent)),
-      fileName: doc.metadata.source,
+      sourceCode: JSON.parse(JSON.stringify(doc.pageContent)) as string,
+      fileName: doc.metadata.source as string,
     });
 
     // Wait for 4 seconds before the next API call

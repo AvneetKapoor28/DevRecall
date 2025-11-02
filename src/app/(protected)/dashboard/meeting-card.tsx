@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { uploadFile } from "@/lib/firebase";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Presentation, Upload } from "lucide-react";
 import React from "react";
 import { useDropzone } from "react-dropzone";
@@ -17,11 +16,13 @@ import { Progress } from "@/components/ui/progress"
 
 const MeetingCard = () => {
   const { project } = useProject();
-  const processMeeting = useMutation({mutationFn: async(data: {meetingUrl: string, projectId:string, meetingId: string})=>{
-    const { meetingUrl, projectId, meetingId } = data;
-    const response = await axios.post('/api/process-meeting', {meetingUrl, projectId, meetingId})
-    return response.data;
-  }})
+  const processMeeting = useMutation({
+    mutationFn: async (data: { meetingUrl: string; projectId: string; meetingId: string }) => {
+      const { meetingUrl, projectId, meetingId } = data;
+      const response = await axios.post<{ success: boolean }>('/api/process-meeting', { meetingUrl, projectId, meetingId });
+      return response.data;
+    },
+  });
 
 
   const router = useRouter();
@@ -34,32 +35,34 @@ const MeetingCard = () => {
     },
     multiple: false,
     maxSize: 50_000_000,
-    onDrop: async (acceptedfiles) => {
-      if (!project) return;
-      setIsUploading(true);
-      console.log(acceptedfiles);
-      const file = acceptedfiles[0];
-      if (!file) return;
-      const downloadUrl = (await uploadFile(
-        file as File,
-        setProgress,
-      )) as string;
-      uploadMeeting.mutate({
-        projectId: project.id,
-        meetingUrl: downloadUrl,
-        name: file.name,
-      }, {
-        onSuccess: (meeting) => {
-            toast.success("Meeting uploaded successfully!");
-            router.push('/meetings')
-            processMeeting.mutateAsync({meetingUrl: downloadUrl, projectId: project.id, meetingId: meeting.id})
-        },
-        onError: () =>{
-            toast.error("Failed to upload meeting");
-        }
-      });
+    onDrop: (acceptedfiles) => {
+      void (async () => {
+        if (!project) return;
+        setIsUploading(true);
+        console.log(acceptedfiles);
+        const file = acceptedfiles[0];
+        if (!file) return;
+        const downloadUrl = (await uploadFile(
+          file as File,
+          setProgress,
+        )) as string;
+        uploadMeeting.mutate({
+          projectId: project.id,
+          meetingUrl: downloadUrl,
+          name: file.name,
+        }, {
+          onSuccess: (meeting) => {
+              toast.success("Meeting uploaded successfully!");
+              router.push('/meetings');
+              void processMeeting.mutateAsync({meetingUrl: downloadUrl, projectId: project.id, meetingId: meeting.id});
+          },
+          onError: () =>{
+              toast.error("Failed to upload meeting");
+          }
+        });
 
-      setIsUploading(false);
+        setIsUploading(false);
+      })();
     },
   });
   return (
