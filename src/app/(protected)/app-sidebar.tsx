@@ -17,20 +17,16 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import useProject from "@/hooks/use-project";
-import useRefetch from "@/hooks/use-refetch";
 import { cn } from "@/lib/utils";
 import {
   Bot,
-  CreditCard,
   LayoutDashboard,
-  LayoutDashboardIcon,
   Plus,
   Presentation,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { title } from "process";
 
 const items = [
   {
@@ -59,6 +55,7 @@ export function AppSidebar() {
   const { open } = useSidebar();
   const { projects, projectId, setProjectId } = useProject();
   const router = useRouter();
+  const pathname = usePathname();
   // console.log(projects, projectId, "IMPORTED FROM USEPROJECT HOOK")
   return (
     <Sidebar collapsible="icon" variant="floating">
@@ -90,7 +87,7 @@ export function AppSidebar() {
                           className={cn(
                             {
                               "!bg-primary !text-white":
-                                usePathname().startsWith(item.url),
+                                pathname.startsWith(item.url),
                             },
                             "list-none",
                           )}

@@ -18,8 +18,8 @@ const ArchiveButton = () => {
         if(confirm) archiveProject.mutate({projectId}, {
             onSuccess: () => {
                 toast.success("Project archived!");
-                refetch()
-                router.push('/create')
+                void refetch();
+                router.push('/create');
             },
             onError: () => {
                 toast.error("Failed to archive project");

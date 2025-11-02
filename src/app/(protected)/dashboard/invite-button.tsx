@@ -23,9 +23,9 @@ const InviteButton = () => {
             </p>
             <Input className='mt-4' 
             readOnly
-            onClick={()=> {
-                navigator.clipboard.writeText(`${window.location.origin}/join/${projectId}`);
-                toast.success("Link copied to clipboard")
+            onClick={() => {
+                void navigator.clipboard.writeText(`${window.location.origin}/join/${projectId}`);
+                toast.success("Link copied to clipboard");
             }} value={`${window.location.origin}/join/${projectId}`}>
 
             </Input>

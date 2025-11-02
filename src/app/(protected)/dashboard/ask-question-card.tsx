@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import useProject from "@/hooks/use-project";
 import { DialogClose, DialogTitle } from "@radix-ui/react-dialog";
-import { set } from "date-fns";
 import Image from "next/image";
 import React from "react";
 import { askQuestion } from "./actions";
@@ -69,9 +68,10 @@ const AskQuestionCard = () => {
                 disabled={saveAnswer.isPending}
                 variant={"outline"}
                 onClick={() => {
+                  if (!project?.id) return;
                   saveAnswer.mutate(
                     {
-                      projectId: project?.id!,
+                      projectId: project.id,
                       question,
                       filesReferences,
                       answer,
@@ -81,7 +81,7 @@ const AskQuestionCard = () => {
                         // setOpen(false);
                         setLoading(false);
                         setQuestion("");
-                        refetch();
+                        void refetch();
                         toast.success("Answer saved");
                       },
                       onError: () => {

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import useRefetch from '@/hooks/use-refetch'
 import { api } from '@/trpc/react'
+import Image from 'next/image'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -33,8 +34,8 @@ const Createpage = () => {
                 toast.dismiss(toastLoading)
                 toast.success(`Project created successfully!
                     You can now access it from the sidebar`)
-                refetch()
-                reset()
+                void refetch();
+                reset();
             },
             onError: () => {
                 toast.dismiss(toastLoading)
@@ -45,7 +46,7 @@ const Createpage = () => {
     }
   return (
     <div className='flex items-center justify-center gap-12 h-full'>
-        <img src="/undraw_developer-activity.svg" alt=" Enter Repo Details" className='h-56 w-auto' />
+        <Image src="/undraw_developer-activity.svg" alt=" Enter Repo Details" width={224} height={224} className='h-56 w-auto' />
         <div>
             <div>
                 <h1 className='font-semibold text-2xl'>Link your GitHub Repository</h1>
